@@ -43,7 +43,6 @@
 			{
 				var URL 	= $("#url").val();
 				var Numero 	= $("#numero").val();
-				var USERPROFILE = getUserHome();
 				
 				$("#result").html('Inicio de descarga: ');
 
@@ -71,10 +70,6 @@
 				command.save('video'+Numero+'.mp4');
 			});
 		});
-
-		function getUserHome() {
-			return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-		}
 	</script>
 </body>
 </html>

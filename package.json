@@ -1,0 +1,12 @@
+{
+  "name": "M3U8_HD_Downloader",
+  "description": "Descarga videos M3U8 facilmente.",
+  "main": "index.html",
+  "window": {
+    "toolbar": true
+  },
+  "dependencies": {
+    "child-process-promise": "^1.1.0",
+    "fluent-ffmpeg": "^2.0.1"
+  }
+}

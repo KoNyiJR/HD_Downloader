@@ -12,7 +12,7 @@
 	</center>
 	<table style="width:100%">
 		<tr>
-			<td>
+			<td style="width:95px">
 				<label>M3U8 URL:<label>
 			</td>
 			<td>
@@ -28,10 +28,11 @@
 			</td>
 		</tr>
 	</table>
-	
-	<button id="convertir" class="btn btn-success">Convertir</button>
+	<br>
+	<button id="convertir" class="btn btn-success">DESCARGAR</button>
+	<button id="limpiar" class="btn btn-primary">LIMPIAR</button>
 	<div>
-		<pre id="result"></pre>
+		<div id="result"></div>
 	</div>
 	<script type="text/javascript" src="assets/javascripts/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
@@ -43,8 +44,10 @@
 			{
 				var URL 	= $("#url").val();
 				var Numero 	= $("#numero").val();
-				
-				$("#result").html('Inicio de descarga: ');
+
+				$("#url").val("");
+				$("#numero").val(parseInt(Numero)+1);
+				$("#result").append("<div id='video"+Numero+"' class='video-item dashed'>Inicio de descarga</div>");
 
 				var command = ffmpeg(URL)
 					.videoCodec('libx264')
@@ -52,22 +55,24 @@
 					.format('mp4')
 					.on('start', function(commandLine) {
 						console.log('Spawned Ffmpeg with command: ' + commandLine);
-						$("#result").html('Spawned Ffmpeg with command: ' + commandLine);
 					})
 					.on('progress', function(progress) {
 						console.log('Processing: ' + progress.percent + '% done');
-						$("#result").append("<div id='progress'></div>");
-						$("#progress").html('Processing: ' + parseInt(progress.percent) + '% done');
+						$("#video"+Numero).html('Descargando: video'+Numero+" "+progress.percent.toFixed(2)+'% ');
 					})
 					.on('error', function(err) {
-						$("#result").append('An error occurred: ' + err.message);
 						console.log('An error occurred: ' + err.message);
+						$("#video"+Numero).append('Ha ocurrido un error: ' + err.message).addClass("bg-danger").removeClass("dashed");
 					})
 					.on('end', function() {
-						$("#result").append('<br />Processing finished !');
 						console.log('Processing finished !');
+						$("#video"+Numero).html('Descarga finalizada! video'+Numero+'.mp4').addClass("bg-success").removeClass("dashed");
 					});
-				command.save('video'+Numero+'.mp4');
+				command.save('videos/video'+Numero+'.mp4');
+			});
+
+			$("#limpiar").on("click", function(){
+				$(".bg-success, .bg-danger").remove();
 			});
 		});
 	</script>

@@ -58,11 +58,12 @@
 					})
 					.on('progress', function(progress) {
 						console.log('Processing: ' + progress.percent + '% done');
-						$("#video"+Numero).html('Descargando: video'+Numero+" "+progress.percent.toFixed(2)+'% ');
+						$("#video"+Numero).html('Descargando: video'+Numero+" "+progress.percent.toFixed(2)+'% <span></span>');
+						$("#video"+Numero+" span").html('targetSize: '+progress.targetSize);
 					})
 					.on('error', function(err) {
 						console.log('An error occurred: ' + err.message);
-						$("#video"+Numero).append('Ha ocurrido un error: ' + err.message).addClass("bg-danger").removeClass("dashed");
+						$("#video"+Numero).html('video'+Numero+'\nHa ocurrido un error: ' + err.message).addClass("bg-danger").removeClass("dashed");
 					})
 					.on('end', function() {
 						console.log('Processing finished !');
